@@ -1,0 +1,161 @@
+{%extends 'subbase.html'%}
+{%block home1%}
+{%load static%}
+<!--<script src="{%static 'codepress/codepress.js'%}" type="text/javascript"></script>-->
+<!--<script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>-->
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        height:100%;
+        width:100%;
+        top: 50%;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<script src="{%static 'src-noconflict/ace.js'%}" type="text/javascript" charset="utf-8"></script>
+<script>
+    
+    $(function(){
+        var ip = location.hostname;
+        var urll='http://'+ip+':8900/'+'{{e}}'+"/op.txt/";
+        document.getElementById("puttxt").src=urll;
+        console.log(urll);
+        //$("#puttxt").attr("src",urll);
+    });
+    function readthisfile(a)
+    {
+        var fn=a.getAttribute("id");
+        $.ajax({
+            url:"",
+            method:"post",            
+            data:{'fn':fn,'csrfmiddlewaretoken': '{{ csrf_token }}','action':'getfile'},
+            success:function(d)
+            {
+                $("#ptext").val(d.fc);
+                $("#filename").val(fn);
+                
+            },
+            error:function(a,b,c)
+            {
+                console.log(a.responseText);
+            }
+        });
+        
+    }
+    
+    function newf()
+    {
+        $("#ptext").val("");
+        $("#filename").val("");
+    }
+    function savef()
+    {
+        var fc=$("#ptext").val();
+        var fn=$("#filename").val();
+        $.ajax({
+            url:"",
+            method:"post",            
+            data:{'fc':fc,'fn':fn,'csrfmiddlewaretoken': '{{ csrf_token }}','action':'savefile'},
+            success:function(d)
+            {
+                alert("saved!!");
+                //$("#list").load();
+                
+            },
+            error:function(a,b,c)
+            {
+                console.log(a.responseText);
+            }
+        });
+    }
+    
+    function compile()
+    {
+        var fn=$("#filename").val();
+        $.ajax({
+            url:"",
+            method:"post",            
+            data:{'fn':fn,'csrfmiddlewaretoken': '{{ csrf_token }}','action':'compile'},
+            success:function(d)
+            {
+                alert("compile complete!!");
+                var ip = location.hostname;
+                var urll='http://'+ip+':8900/'+'{{e}}'+"/op.txt/";
+                document.getElementById("puttxt").src=urll;
+                //$('#puttxt').attr('src', urll);
+                        
+            },
+            error:function(a,b,c)
+            {
+                console.log(a.responseText);
+            }
+        });
+    }
+    
+    function run()
+    {
+        var fn=$("#filename").val();
+        $.ajax({
+            url:"",
+            method:"post",            
+            data:{'fn':fn,'csrfmiddlewaretoken': '{{ csrf_token }}','action':'run'},
+            success:function(d)
+            {
+                alert("run complete!!");
+                var ip = location.hostname;
+                var urll='http://'+ip+':8900/'+'{{e}}'+"/op.txt/";
+                document.getElementById("puttxt").src=urll;
+                //$('#puttxt').attr('src', urll);
+                        
+            },
+            error:function(a,b,c)
+            {
+                console.log(a.responseText);
+            }
+        });
+    }
+</script>
+<div class="modal-body row">
+   <div id="list" class="col-md-2">
+       <label>List of your files</label>
+       {%for i in t%}
+       <a id={{i}} onclick="readthisfile(this);" href="#"><button class="btn form-control">{{i}}</button></a>      
+       {%endfor%}
+   </div>
+   <div class="col-md-10">
+       <nav class="navbar navbar-default">
+           <ul class="nav navbar-nav">
+    <li><a href="#"><input type="text" id="filename" placeholder="  File Name" class="input-md" /></a></li>
+    <li><a href="#"><label for="sel1"> Language </label><select class="input-md" id="sel1">
+        <option> Java </option>
+        <option> Python </option>
+      </select></a></li>
+           </ul>
+           <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><button type="button" class="btn btn-default" onclick="newf();"> New </button></a></li>
+      <li><a href="#"><button type="button" class="btn btn-default" onclick="savef();"> Save </button></a></li>
+      <li><a href="#"><button type="button" class="btn btn-default" onclick="compile();"> Compile </button></a></li>
+      <li style="padding-right:20px;" ><a href="#"><button type="button" onclick="run();" class="btn btn-default"> Run </button></a></li>
+            </ul>
+       </nav>
+       <!--<div id="editor">function foo(items) {
+        var x = "All this is syntax highlighted";
+        return x;
+           }</div>-->
+       <!--<textarea id="myCpWindow" class="codepress javascript" rows="22%" class="embed-responsive-item">
+
+       </textarea>-->
+       <textarea class="form-control" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" rows="17%" id="ptext"></textarea>
+       <iframe id="puttxt" style="border:0px;width: 100%;height:20%" src=""></iframe>
+       <!--<script>
+    var editor = ace.edit("editor");
+    
+    editor.getSession().setMode("ace/mode/javascript");
+           editor.resize();
+</script>-->
+   </div>
+</div>
+
+{%endblock%}

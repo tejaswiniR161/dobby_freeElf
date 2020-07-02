@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%block navb%}
+  <title>Home</title>
+  <meta charset="utf-8">
+  
+</head>
+<body>
+<div class="container-fluid">
+    
+    <nav class="navbar navbar-inverse"> 
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style="font-size:2em;">Free Elf</a>
+    </div>
+        
+    <!--<ul class="nav navbar-nav">
+        <li class=""><a href="#">Input</a></li>
+        <li class=""><a href="#">Record your Handwriting</a></li>
+        <li class=""><a href="#">Output</a></li>
+    </ul>-->
+        
+    <ul class="nav navbar-nav navbar-right">
+      <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+      <li style="padding-right:20px;"><a href="/LogOut/"><span class="glyphicon glyphicon-log-out"></span>LogOut</a></li>
+    </ul>
+  
+    </nav>
+    </div>
+    {%block home1%}
+    {%endblock%}
+</body>
+    {%endblock%}
+    
+</html>
