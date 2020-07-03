@@ -45,10 +45,17 @@ def Index(r):
         
         if r.POST.get("action")=="run":
             fn=r.POST.get("fn")
+            iptext=r.POST.get("iptext")
+            print(iptext+" ipcontent")
             fs=fn.split(".")
             print("after split")
             print(fs[0])
             e=r.session['e']
+            with open("helloip"+e+".txt", 'w') as out:
+                out.write(iptext)
+            #ipfile=open(ipfilename,"w")
+            #ipfile.writelines(iptext)
+            #ipfile.close()
             #fw=open(e+"/"+"op.txt","a")            
             #proc = subprocess.Popen(['java', e+"/"+fs[0]],stdout=PIPE, stderr=STDOUT,bufsize=1, universal_newlines=True)
             #for line in iter(proc.stdout.readline,''):
@@ -56,7 +63,7 @@ def Index(r):
             #fw.close()
             #tst=os.system("cd "+e)
             #print(tst)
-            stm="java -classpath "+e+" "+fs[0]+" > "+e+"/op.txt 2>&1"
+            stm="java -classpath "+e+" "+fs[0]+" < "+"helloip"+e+".txt" +" > "+e+"/op.txt 2>&1"
             #stm="java "+fs[0]+" >> "+e+"/op.txt 2>&1"
             resp1=os.system(stm)
             print(stm)
