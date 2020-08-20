@@ -103,6 +103,8 @@ def SignUpSave(r):
     st+=e
     os.system(st)
     os.system("touch /"+st+"/op.txt")
+    os.system("touch /"+st+"/Example.java")
+    os.system("sudo cp Example.java /"+st)#+"/Example.java")
     return HttpResponseRedirect("/LogIn/")
 
 def LogIn(r):
