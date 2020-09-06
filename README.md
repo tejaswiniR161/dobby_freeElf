@@ -1,5 +1,5 @@
 # dobby_freeElf
-IDE for Java development
+IDE for Java development | Responsive to all devices | Can be used on a mobile device as well!
 
 command to run : `python manage.py runserver`
 
