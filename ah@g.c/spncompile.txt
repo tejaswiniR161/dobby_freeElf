@@ -1,7 +1,0 @@
-ah@g.c\check.java:1: error: class, interface, or enum expected
-from java.utils import Scanner
-^
-ah@g.c\check.java:1: error: reached end of file while parsing
-from java.utils import Scanner
-                              ^
-2 errors
